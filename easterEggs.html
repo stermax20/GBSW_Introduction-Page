@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #rotatingImage {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+        }
+
+        audio {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+    <title>시공의 경소고는 정말 최고야!</title>
+</head>
+
+<body>
+    <img id="rotatingImage" src="./img/gbsw.png" alt="Rotating Image">
+    <audio controls autoplay>
+        <source src="./audio/easter_eggs_sound.mp3" type="audio/mp3">
+    </audio>
+    <script>
+        const rotatingImage = document.getElementById('rotatingImage');
+        let rotationAngle = 0;
+        let scale = 1;
+
+        function rotateAndScale() {
+            rotationAngle += 5;
+            scale = Math.min(scale + 0.01, 10);
+
+            const transformValue = `translate(-50%, -50%) rotate(${rotationAngle}rad) scale(${scale})`;
+            rotatingImage.style.transform = transformValue;
+
+            requestAnimationFrame(rotateAndScale);
+        }
+
+        rotateAndScale();
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+            const duration = 10000;
+            const interval = 20;
+            const steps = duration / interval;
+            let currentStep = 0;
+
+            function updateColor() {
+                const redValue = Math.floor((currentStep / steps) * 255);
+                const color = `rgb(${redValue}, 0, 0)`;
+                body.style.backgroundColor = color;
+
+                currentStep++;
+
+                if (currentStep <= steps) {
+                    requestAnimationFrame(updateColor);
+                }
+            }
+
+            updateColor();
+        });
+    </script>
+</body>
+
+</html>
